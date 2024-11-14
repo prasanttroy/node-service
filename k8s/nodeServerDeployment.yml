@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simple-node-app
+  labels:
+    app: node-app
+spec:
+  replicas: 2  # Number of replicas (adjust as needed)
+  selector:
+    matchLabels:
+      app: node-app
+  template:
+    metadata:
+      labels:
+        app: node-app
+    spec:
+      containers:
+        - name: simple-node-app
+          image: prasanttroy/simple-node-app:latest   # Replace with your Docker image
+          ports:
+            - containerPort: 8080  # Port the app listens on within the container
+          resources:
+            requests:
+              memory: "256Mi"       # Minimum memory requested
+              cpu: "250m"           # Minimum CPU requested
+            limits:
+              memory: "512Mi"       # Maximum memory limit
+              cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: node-app-service
+spec:
+  selector:
+    app: node-app
+  ports:
+    - protocol: TCP
+      port: 80        # Port for the Service (external)
+      targetPort: 8080 # Port your app listens on
+  type: LoadBalancer  # Exposes the service externally
