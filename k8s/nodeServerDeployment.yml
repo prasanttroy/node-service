@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: simple-node-app
-          image: prasanttroy/simple-node-app:latest   # Replace with your Docker image
+          image: prasroregistry.azurecr.io/simple-node-app:v1.0   # Replace with your Docker image
           ports:
             - containerPort: 8080  # Port the app listens on within the container
           resources:
